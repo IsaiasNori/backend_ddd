@@ -1,19 +1,20 @@
 using System;
 using System.Collections.Generic;
-using Domain.Core.Models;
-using Domain.Core.Repositories;
+using Domain.Interfaces.Repositories;
+using Domain.Interfaces.Services;
+using Domain.Models;
 
 namespace Domain.Core.Services
 {
-    public class BaseService<M> : IService<M> where M : BaseModel
+    public class BaseService<M, R> : IService<M>
+        where M : BaseModel
+        where R : IRepository<M>
     {
-        protected readonly IRepository<M> _repository;
-        public BaseService(IRepository<M> repository)
-        {
-            _repository = repository;
-        }
+        protected readonly R _repository;
+        public BaseService(R repository) => _repository = repository;
 
-        public List<M> Get()
+
+        public List<M> Get(Int32? page, Int32? size)
         {
             return _repository.Get();
         }
@@ -21,17 +22,19 @@ namespace Domain.Core.Services
         {
             return _repository.Get(id);
         }
-        public M Create(M model)
+        public M Create(M model, String actor)
         {
-            return _repository.Insert(model, true);
+            var id = _repository.Insert(model, true);
+            return model;
         }
-        public M Update(M model)
+        public M Update(M model, String actor)
         {
-            return _repository.Update(model, true);
+            _repository.Update(model, true);
+            return model;
         }
-        public M SoftDelete(M model)
+        public void Remove(M model, String actor)
         {
-            return _repository.SoftDelete(model, true);
+            _repository.Update(model, true);
         }
 
     }

@@ -1,6 +1,8 @@
 using System;
+using Domain.Interfaces;
+using Domain.Interfaces.Entities;
 
-namespace Domain.Core.Models
+namespace Domain.Models
 {
     public class UserModel : BaseModel
     {
@@ -11,5 +13,13 @@ namespace Domain.Core.Models
         {
         }
 
+        public UserModel(UserModel model) : base(model)
+        {
+            if (model == null)
+                return;
+
+            Name = model.Name;
+            Password = model.Password;
+        }
     }
 }

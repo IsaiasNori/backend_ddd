@@ -1,6 +1,6 @@
-using Domain.Core.Models;
+using Domain.Models;
 
-namespace Domain.Core.Repositories
+namespace Domain.Interfaces.Repositories
 {
     public interface IUserRepository : IRepository<UserModel>
     {

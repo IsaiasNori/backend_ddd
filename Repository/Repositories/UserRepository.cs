@@ -1,6 +1,7 @@
 
-using Domain.Core.Models;
-using Domain.Core.Repositories;
+
+using Domain.Interfaces.Repositories;
+using Domain.Models;
 using Repository.Context;
 using Repository.Entities;
 
@@ -10,6 +11,11 @@ namespace Repository.Repositories
     {
         public UserRepository(CoreContext context) : base(context, context.UserEntity)
         {
+        }
+
+        protected override UserEntity RemoveRelations(UserEntity entity)
+        {
+            return entity;
         }
     }
 
