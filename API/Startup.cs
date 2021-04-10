@@ -10,26 +10,14 @@ namespace Api
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; private set; }
+        public IConfiguration _configuration { get; private set; }
 
-        public Startup(IWebHostEnvironment env)
-        {
-            String debugPath = @"bin\Debug\net5.0\";
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile(debugPath + "appsettings.Development.json", false, true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
-            Configuration.ConfigureEnvironment();
-
-        }
+        public Startup(IConfiguration configuration) => _configuration = configuration;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureSqlServer(Configuration);
+            services.ConfigureSqlServer(_configuration);
 
             services.InjectDependencies();
 
