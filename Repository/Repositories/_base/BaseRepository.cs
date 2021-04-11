@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Domain.Models;
 using Domain.Interfaces.Repositories;
-using Repository.Context;
 using Microsoft.EntityFrameworkCore;
 using Repository.Entities;
 using Domain.Utils;
@@ -78,8 +77,8 @@ namespace Repository.Repositories
                         e.Id == id &&
                         e.DeletedAt == null)
                     .AsNoTracking()
-                    .Select(e => e.ToModel())
-                    .FirstOrDefault();
+                    .FirstOrDefault()
+                    .ToModel();
 
                 return result;
             }

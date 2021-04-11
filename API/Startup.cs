@@ -17,16 +17,11 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureEnvironment(_configuration);
+
             services.ConfigureSqlServer(_configuration);
 
             services.InjectDependencies();
-
-            services.AddControllers();
-
-            // services.AddSwaggerGen(c =>
-            // {
-            //     c.SwaggerDoc("v1", new OpenApiInfo { Title = "back_dotnet", Version = "v1" });
-            // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,8 +35,6 @@ namespace Api
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
-                // app.UseSwagger();
-                // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "back_dotnet v1"));
             }
 
             // app.UseHttpsRedirection();
@@ -50,13 +43,13 @@ namespace Api
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "api/{controller}");
+                endpoints.MapControllerRoute("default", "api/v1/{controller}");
             });
         }
     }

@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class StatusController : BaseController
+    [Route("api/v1/[controller]")]
+    public class StatusController : BaseApiController
     {
 
         public StatusController() : base()

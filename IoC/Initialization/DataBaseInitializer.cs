@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Repository.Context;
+using Repository;
 
 namespace IoC.Initialization
 {
@@ -9,7 +9,7 @@ namespace IoC.Initialization
     {
         public static void ConfigureSqlServer(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContextPool<CoreContext>(options => options
+            services.AddDbContext<CoreContext>(options => options
                 .UseSqlServer(configuration.GetConnectionString("CoreContextConnection")));
         }
     }

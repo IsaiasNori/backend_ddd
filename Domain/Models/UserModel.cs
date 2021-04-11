@@ -8,6 +8,10 @@ namespace Domain.Models
     {
         public String Name { get; set; }
         public String Password { get; set; }
+        public String Role { get; set; }
+        public String Token { get; set; }
+
+
 
         public UserModel() : base()
         {
@@ -20,6 +24,8 @@ namespace Domain.Models
 
             Name = model.Name;
             Password = model.Password;
+            Role = model.Role;
+            Token = model.Token;
         }
     }
 }
