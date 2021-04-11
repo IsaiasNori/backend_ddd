@@ -4,29 +4,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Repository.Context;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    [Migration("20210315014513_Start")]
-    partial class Start
+    [Migration("20210411032155_Genesis")]
+    partial class Genesis
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Repository.Entities.UserEntity", b =>
+            modelBuilder.Entity("Repository.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
+                    b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("CreatedBy")
@@ -39,9 +37,15 @@ namespace Repository.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Password")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Role")
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("UpdatedBy")
@@ -49,7 +53,7 @@ namespace Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserEntity");
+                    b.ToTable("User");
                 });
 #pragma warning restore 612, 618
         }

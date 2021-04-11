@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class StatusController : BaseController
+    [Route("api/v1/[controller]")]
+    public class StatusController : BaseApiController
     {
 
         public StatusController() : base()
@@ -20,11 +17,11 @@ namespace Api.Controllers
         [HttpGet]
         public ActionResult<String> Get()
         {
-            //String now = DateTimeOffset.UtcNow.ToString("u", new CultureInfo("pt-BR"));
+            String date = "System Date: " + DateTimeOffset.UtcNow.ToString();
 
-            String result = "Date System: " + DateTimeOffset.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
+            String env = "Environment: " + Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-            result += "\nEnvironment: Development";
+            var result = $"{env}\n{date}\nOk";
 
             return Ok(result);
         }

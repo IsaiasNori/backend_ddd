@@ -1,15 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Repository.Entities;
 
-namespace Repository.Context
+namespace Repository
 {
     public class CoreContext : DbContext
     {
-        public DbSet<UserEntity> UserEntity { get; set; }
+        public DbSet<User> User { get; set; }
 
-        public CoreContext(DbContextOptions<CoreContext> options) : base(options)
+        public CoreContext(DbContextOptions<CoreContext> options)
+            : base(options)
         {
-            ChangeTracker.LazyLoadingEnabled = false;
         }
     }
 }

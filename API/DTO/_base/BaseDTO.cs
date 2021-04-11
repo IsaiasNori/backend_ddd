@@ -1,6 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
-using Domain.Core.Models;
+using Domain.Models;
 
 namespace Api.DTO
 {

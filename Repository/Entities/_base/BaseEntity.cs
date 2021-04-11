@@ -1,11 +1,13 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Core.Models;
+using Domain.Interfaces.Entities;
+using Domain.Models;
 
 namespace Repository.Entities
 {
-    public class BaseEntity
+    public abstract class BaseEntity<M> : IEntity
+        where M : BaseModel
     {
         [Key]
         public String Id { get; set; }
@@ -15,8 +17,8 @@ namespace Repository.Entities
 
         [Column(TypeName = "nvarchar(100)")]
         public String UpdatedBy { get; set; }
-        public DateTimeOffset? CreatedAt { get; set; }
-        public DateTimeOffset? UpdatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
         public DateTimeOffset? DeletedAt { get; set; }
         public BaseEntity()
         {
@@ -34,40 +36,26 @@ namespace Repository.Entities
             DeletedAt = model.DeletedAt;
 
         }
-
-
-        public static implicit operator BaseModel(BaseEntity entity)
-        {
-            if (entity == null)
-                return null;
-
-            BaseModel model = new()
-            {
-                Id = entity.Id,
-                CreatedBy = entity.CreatedBy,
-                UpdatedBy = entity.UpdatedBy,
-                CreatedAt = entity.CreatedAt,
-                UpdatedAt = entity.UpdatedAt,
-                DeletedAt = entity.DeletedAt,
-            };
-
-            return model;
-        }
-
-        public static implicit operator BaseEntity(BaseModel model)
+        public String GetId() => Id;
+        public String GetCreatedBy() => CreatedBy;
+        public String GetUpdatedBy() => UpdatedBy;
+        public DateTimeOffset GetCreatedAt() => CreatedAt;
+        public DateTimeOffset GetUpdatedAt() => UpdatedAt;
+        public DateTimeOffset? GetDeletedAt() => DeletedAt;
+        public abstract M ToModel();
+        public virtual void FromModel(M model)
         {
             if (model == null)
-                return null;
+                return;
 
-            BaseEntity entity = new(model);
-
-            return entity;
+            Id = model.Id;
+            CreatedBy = model.CreatedBy;
+            UpdatedBy = model.UpdatedBy;
+            CreatedAt = model.CreatedAt;
+            UpdatedAt = model.UpdatedAt;
+            DeletedAt = model.DeletedAt;
         }
 
-
-
-        public void SetSoftDelete() =>
-            DeletedAt = DateTimeOffset.UtcNow;
     }
 
 }

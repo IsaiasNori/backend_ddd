@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using IoC.Initialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,35 +11,18 @@ namespace Api
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; private set; }
+        public IConfiguration _configuration { get; private set; }
 
-        public Startup(IWebHostEnvironment env)
-        {
-            String debugPath = @"bin\Debug\net5.0\";
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile(debugPath + "appsettings.Development.json", false, true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
-            Configuration.ConfigureEnvironment();
-
-        }
+        public Startup(IConfiguration configuration) => _configuration = configuration;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureSqlServer(Configuration);
+            services.ConfigureEnvironment(_configuration);
+
+            services.ConfigureSqlServer(_configuration);
 
             services.InjectDependencies();
-
-            services.AddControllers();
-
-            // services.AddSwaggerGen(c =>
-            // {
-            //     c.SwaggerDoc("v1", new OpenApiInfo { Title = "back_dotnet", Version = "v1" });
-            // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,8 +36,6 @@ namespace Api
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
-                // app.UseSwagger();
-                // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "back_dotnet v1"));
             }
 
             // app.UseHttpsRedirection();
@@ -62,13 +44,13 @@ namespace Api
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "api/{controller}");
+                endpoints.MapControllerRoute("default", "api/v1/{controller=Home}");
             });
         }
     }
