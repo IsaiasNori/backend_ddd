@@ -21,7 +21,7 @@ namespace Domain.Services
             if (result == null)
                 throw new WebException("Usuário ou senha inválidos");
 
-            result.Token = TokenHelper.GenerateToken(user);
+            result.Token = TokenHelper.GenerateToken(result);
 
             _repository.Update(result, true);
 

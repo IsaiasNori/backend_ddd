@@ -15,7 +15,7 @@ namespace Repository.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     Role = table.Column<string>(type: "nvarchar(50)", nullable: true),
-                    Token = table.Column<string>(type: "nvarchar(200)", nullable: true),
+                    Token = table.Column<string>(type: "nvarchar(500)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),

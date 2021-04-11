@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using IoC.Initialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,7 +50,7 @@ namespace Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "api/v1/{controller}");
+                endpoints.MapControllerRoute("default", "api/v1/{controller=Home}");
             });
         }
     }

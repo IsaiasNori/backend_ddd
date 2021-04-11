@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Repository;
 
 namespace Repository.Migrations
 {
@@ -45,7 +43,7 @@ namespace Repository.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Token")
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
