@@ -1,5 +1,6 @@
 using System.Text;
 using Domain;
+using Domain.Constants;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

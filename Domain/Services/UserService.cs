@@ -16,7 +16,9 @@ namespace Domain.Services
 
         public UserModel Authenticate(UserModel user)
         {
-            var result = _repository.Get(user.Name, user.Password);
+            var hash = HashHelper.EncryptPassord(user.Password);
+
+            var result = _repository.Get(user.Name, hash);
 
             if (result == null)
                 throw new WebException("Usuário ou senha inválidos");
@@ -24,8 +26,6 @@ namespace Domain.Services
             result.Token = TokenHelper.GenerateToken(result);
 
             _repository.Update(result, true);
-
-            result.Password = "";
 
             return result;
         }

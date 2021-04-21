@@ -1,6 +1,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Api.DTO.Login;
 using Domain.Interfaces.Services;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -30,14 +31,16 @@ namespace Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<UserModel>> Login([FromBody] UserModel dto)
+        public async Task<ActionResult<LoginResponseDTO>> Login([FromBody] LoginRequestDTO dto)
         {
 
             if (String.IsNullOrEmpty(dto.Name) ||
                 String.IsNullOrEmpty(dto.Password))
                 return NotFound(new { message = "Usuário ou senha inválidos" });
 
-            var result = _userService.Authenticate(dto);
+            var user = dto.ToUser();
+
+            var result = new LoginResponseDTO(_userService.Authenticate(user));
 
             return result;
         }

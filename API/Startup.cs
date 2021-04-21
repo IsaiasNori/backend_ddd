@@ -50,7 +50,7 @@ namespace Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("default", "api/v1/{controller=Home}");
+                endpoints.MapControllers();
             });
         }
     }
